@@ -72,3 +72,40 @@ $('.permbutton').click( function( e ) {
 
 // ---- Assign unique ids to everything that doesn't have an ID ----
 $('#html-loc').find('*').uniqueId() 
+
+let panel = define_new_effective_permissions("panel", true, null)
+
+$('#sidepanel').append(panel)
+$('#panel').attr('filepath', '/C')
+// $('#panel').attr('username', 'administrator')
+// $('#panel').attr('filepath', '/C/presentation_documents/important_file.txt_permbutton')
+
+let new_user = define_new_user_select_field("new_user", "Select User", function(selected_user){
+    $('#panel').attr('username', selected_user)
+})
+
+$('#sidepanel').append(new_user)
+
+let new_dialog = define_new_dialog('new_dialog', '')
+
+$('.perm_info').click(function(){
+    console.log('clicked!')
+    new_dialog.dialog('open')
+    $('#panel').attr('filepath')
+    $('#panel').attr('username')
+    console.log($( this ))
+    console.log($('#panel').attr('filepath'))
+    console.log($('#panel').attr('username'))
+    let my_file_obj = path_to_file[$('#panel').attr('filepath')]
+    let username = all_users[$('#panel').attr('username')]
+    let perm_attribute = this.getAttribute("permission_name")
+    let display_user = allow_user_action(my_file_obj, username, perm_attribute, true)
+    // console.log(display_user['text_explanation'])
+    console.log(get_explanation_text(display_user))
+    $('#new_dialog').empty()
+    $('#new_dialog').append(get_explanation_text(display_user))
+    // $('#new_dialog').append(my_file_obj)
+    // $('#new_dialog').append(username)
+    
+})
+
